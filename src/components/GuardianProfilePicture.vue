@@ -14,13 +14,16 @@
                       <Icon :title="'upload'" :color="'gray'" :size="18" />
                     </div>
                     <p>
-                      <span class="text-blue-400 font-medium cursor-pointer">
-                        Click to upload
-                      </span>
+                      <label for="fileInput" class="text-blue-400 font-medium cursor-pointer inline">
+                        Click to add
+                        <input type="file" @change="handleFileChange" class="hidden" id="fileInput" />
+                      </label>
+                      <span>
                       or drag and drop
+                      </span>
                     </p>
                     <p class="text-gray-300">
-                      SVG, PNG, JPG or GIF (max. 800x400px)
+                      PNG, JPG or JPEG (max. 800x400px)
                     </p>
                   </div>
                 </div>
@@ -46,6 +49,12 @@ Icon
       },
     },
   },
+
+  methods:{
+     handleFileChange(e) {
+      this.formData.profile_image = e.target.files[0];
+    },
+  }
 }
 </script>
 

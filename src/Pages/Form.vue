@@ -42,8 +42,8 @@ PreviousSchoolDetails,
    formData:{
    student_personal_details:{
    profile_image:'',
-   first_name:'drtfyvubnj',
-   last_name:'dsfghjjhcgfxd',
+   first_name:'',
+   last_name:'',
    other_names:'',
    gender:'',
    date_of_birth:'',
@@ -62,6 +62,7 @@ PreviousSchoolDetails,
    academic_details:{
    session:'',
    class:'',
+   enroll_date:'',
    section:'',
    department:'',
    },

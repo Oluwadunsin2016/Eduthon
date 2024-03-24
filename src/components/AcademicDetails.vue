@@ -27,6 +27,7 @@
           <input
             type="date"
             required
+            v-model="formData.enroll_date"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>

@@ -170,7 +170,7 @@ v-model="formData.first_name"
           <input
             type="text"
             required
-            city
+            v-model="formData.city"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
