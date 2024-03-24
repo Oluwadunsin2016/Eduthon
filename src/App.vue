@@ -1,0 +1,98 @@
+<template>
+  <q-layout view="lHh Lpr lFf" class="bg-gray-50">
+<div v-if="showNav">
+    <q-header class="h-16 !bg-gray-100 shadow flex items-center">
+      <q-toolbar class="flex justify-between items-center px-5">
+<div class="flex items-center gap-2">
+      <div class="md:hidden">
+        <q-btn
+          flat
+          dense
+          round
+          class="!text-gray-600"
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          aria-label="Menu"
+          icon="menu"
+        />
+      </div>
+ <div class="relative">
+          <input
+            type="text"
+            name=""
+            class="w-full py-2 ps-8 pe-2 text-sm outline-none rounded border"
+            placeholder="Search..."
+          />
+          <div class="absolute top-3 left-2">
+          <Icon :title="'search'" :color="'gray'" :size="18" />
+          </div>
+        </div>
+</div>
+<div class="flex items-center gap-4">
+<!-- <div class="hidden md:!flex items-center gap-4 "> -->
+<div class="flex items-center gap-4 ">
+<div class="inline cursor-pointer">
+          <Icon :title="'square'" :color="'gray'" :size="18" />
+</div>
+<div class="inline cursor-pointer">
+          <Icon :title="'moon'" :color="'gray'" :size="18" />
+</div>
+<div class="inline cursor-pointer">
+          <Icon :title="'bell'" :color="'gray'" :size="18" />
+</div>
+<div class="inline cursor-pointer">
+          <Icon :title="'dot'" :color="'gray'" :size="30" />
+</div>
+</div>
+<div class="inline cursor-pointer">
+          <Icon :title="'arrow_down'" :color="'gray'" :size="18" />
+</div>
+</div>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer
+      v-model="leftDrawerOpen"
+      
+      show-if-above
+      class="w-[5rem]"
+    >
+   <Sidebar/>
+    </q-drawer>
+</div>
+
+    <q-page-container>
+    <div class="py-6 px-8">
+    <router-view/>
+    </div>
+    </q-page-container>
+  </q-layout>
+</template>
+
+<script>
+import { ref } from 'vue'
+import Sidebar from './components/Sidebar.vue'
+import Icon from './components/Icon.vue'
+
+export default {
+  name: 'LayoutDefault',
+
+  components: {
+    Sidebar,
+    Icon
+  },
+
+  data () {
+    return {
+      leftDrawerOpen: ref(false),
+      showNav: true,
+    }
+  },
+
+    created() {
+    this.$router.afterEach((to, from) => {
+      // Update showNav based on the current route
+      this.showNav = to.path !== '/login';
+    });
+  },
+}
+</script>
