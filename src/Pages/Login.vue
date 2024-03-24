@@ -37,7 +37,7 @@ export default {
 
   methods:{
   login(){
-  this.$router.push('/branches');
+  this.$router.push('/');
   }
   }
 };

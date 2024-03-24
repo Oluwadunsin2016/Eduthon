@@ -10,7 +10,7 @@ const routes = [
   //   meta: { public: false }, // marked the route as private
   // },
   {
-    path: "/branches",
+    path: "/",
     component: Branches,
     meta: { public: false }, // marked the route as private
   },

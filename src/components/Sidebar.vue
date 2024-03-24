@@ -23,7 +23,7 @@
         class="text-gray-200 font-semibold tracking-wider"
       >
            <q-list bordered separator class="bg-[#138177] ps-4">
-      <q-item clickable v-ripple to="/branches" exact>
+      <q-item clickable v-ripple to="/" exact>
         <q-item-section avatar>
           <q-icon name="zoom_out_map" />
         </q-item-section>

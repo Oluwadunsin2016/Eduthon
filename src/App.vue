@@ -50,6 +50,8 @@
       </q-toolbar>
     </q-header>
 
+
+
     <q-drawer
       v-model="leftDrawerOpen"
       
@@ -65,6 +67,11 @@
     <router-view/>
     </div>
     </q-page-container>
+
+<q-footer v-if="showNav" class="absolute bottom-0 border-t !bg-gray-100 !text-gray-600 border-gray-200 flex flex-col items-center sm:flex-row sm:justify-between px-4 py-2">
+         <span>2023 &copy; Delwathon Group of Schools</span>
+  <span>Designed and developed by Delwathon IT Solution</span>
+      </q-footer>
   </q-layout>
 </template>
 
