@@ -34,7 +34,18 @@ import Icon from './Icon.vue'
 export default {
 components:{
 Icon
-}
+},
+    props: {
+    formData: Object,
+  },
+  watch: {
+    formData: {
+      deep: true,
+      handler(newValue) {
+        this.$emit("update:formData", newValue);
+      },
+    },
+  },
 }
 </script>
 

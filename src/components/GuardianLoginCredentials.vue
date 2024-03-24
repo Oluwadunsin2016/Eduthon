@@ -17,7 +17,7 @@
           <input
             type="email"
             required
-            v-model="formData.guardian.email"
+            v-model="formData.email"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -29,7 +29,7 @@
           <input
             type="password"
             required
-            v-model="formData.guardian.password"
+            v-model="formData.password"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -40,7 +40,6 @@
           <input
             type="password"
             required
-            v-model="formData.guardian.confirmPassword"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -51,23 +50,15 @@
 </template>
 
 <script>
-// import Icon from './Icon.vue'
 import Icon from "./Icon.vue";
 export default {
-// props:['formData'],
   components: {
     Icon,
   },
   props: {
     formData: Object,
   },
-  // data() {
-  //   return {
-  //     formData
-  //   }
-  // },
   mounted(){
-  // console.log(this.formData);
   },
 
   watch: {

@@ -48,9 +48,6 @@ this.branches= res.data.branches;
 },
 
   methods:{
-selectBranch(branch){
-this.branch=branch
-},
 
     handleSelect(event) {
       this.branch=this.branches.find(b=>b.name==event.target.value);
@@ -58,7 +55,7 @@ this.branch=branch
   proceed(){
   if (Object.keys(this.branch).length > 0) {
   console.log(this.branch);
-  sessionStorage.setItem("branch", this.branch);
+  sessionStorage.setItem("branch", JSON.stringify(this.branch));
   this.$router.push('/enroll');
   }
   }

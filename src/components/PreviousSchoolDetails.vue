@@ -18,6 +18,7 @@
           <input
             type="text"
             required
+            v-model="formData.name"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -28,6 +29,7 @@
           <input
             type="text"
             required
+            v-model="formData.qualification"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -40,6 +42,7 @@
           name=""
           id=""
           required
+          v-model="formData.remark"
           :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
         ></textarea>
       </div>
@@ -53,6 +56,17 @@ import Icon from "./Icon.vue";
 export default {
   components: {
     Icon,
+  },
+      props: {
+    formData: Object,
+  },
+  watch: {
+    formData: {
+      deep: true,
+      handler(newValue) {
+        this.$emit("update:formData", newValue);
+      },
+    },
   },
 };
 </script>

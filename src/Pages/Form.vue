@@ -1,12 +1,12 @@
 <template>
-  <AcademicDetails/>
-  <StudentDetails/>
-  <StudentLoginCredentials/>
-  <GuardianDetails/>
-  <GuardianProfilePicture/>
-  <PreviousSchoolDetails/>
 <form @submit.prevent="submitForm">
-  <GuardianLoginCredentials :formData="formData" />
+  <AcademicDetails :formData="formData.academic_details"/>
+  <StudentDetails :formData="formData.student_personal_details"/>
+  <StudentLoginCredentials :formData="formData.student_personal_details"/>
+  <GuardianDetails :formData="formData.guardian_information"/>
+  <GuardianProfilePicture :formData="formData.guardian_information"/>
+  <PreviousSchoolDetails :formData="formData.previous_school"/>
+  <GuardianLoginCredentials :formData="formData.guardian_information" />
   <div class="flex justify-center item-center">
      <button
      type="submit"
@@ -40,11 +40,51 @@ PreviousSchoolDetails,
  data() {
     return {
    formData:{
-   guardian:{
+   student_personal_details:{
+   profile_image:'',
+   first_name:'drtfyvubnj',
+   last_name:'dsfghjjhcgfxd',
+   other_names:'',
+   gender:'',
+   date_of_birth:'',
+   religion:'',
+   blood_group:'',
+   genotype:'',
    email:'',
    password:'',
-   confirmPassword:'',
-   }
+   phone_number:'',
+   mother_language:'',
+   state:'',
+   local_government:'',
+   city:'',
+   address:'',
+   },
+   academic_details:{
+   session:'',
+   class:'',
+   section:'',
+   department:'',
+   },
+   previous_school:{
+   name:'',
+   qualification:'',
+   remark:'',
+   },
+   guardian_information:{
+   profile_image:'',
+     first_name:'',
+   last_name:'',
+   other_names:'',
+    local_government:'',
+   city:'',
+   address:'',
+   gender:'',
+   religion:'',
+   relationship:'',
+   occupation:'',
+   email:'',
+   password:'',
+   },
    }
     };
   },

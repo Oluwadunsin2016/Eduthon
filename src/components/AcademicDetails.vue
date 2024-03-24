@@ -10,41 +10,15 @@
     </div>
 
     <div class="m-4 px-4 py-6 rounded-md shadow-md">
-      <div class="grid grid-col-1 sm:grid-cols-2 md:grid-cols-4 gap-5 my-4">
+      <div class="grid grid-col-1 md:grid-cols-2 gap-5 my-4">
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Academic Session <span class="text-red-500">*</span></label
           >
-          <select
-            name=""
-            id=""
-            required
-            :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
-          >
-            <option value=""></option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-gray-500 font-semibold tracking-wide"
-            >Register No <span class="text-red-500">*</span></label
-          >
-          <input
-            type="text"
-            required
-            :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
-          />
-        </div>
-        <div>
-          <label class="block text-gray-500 font-semibold tracking-wide"
-            >Roll No <span class="text-red-500">*</span></label
-          >
-          <input
-            type="text"
-            required
-            :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
-          />
+                 <select name="" id="" v-model="formData.session" @change="handleSelectSession" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+            <option value="" class="text-gray-300">Select</option>
+            <option v-for="session in sessions" :key="session.id" :value="session.name">{{session.name}}</option>
+            </select>
         </div>
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
@@ -62,7 +36,7 @@
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Class <span class="text-red-500">*</span></label
           >
-      <select name="" id="" @change="handleSelect" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+      <select name="" id="" v-model="formData.class" @change="handleSelectClass" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
             <option value="" class="text-gray-300">Select</option>
             <option v-for="clas in classes" :key="clas.id" :value="clas.name">{{clas.name}}</option>
             </select>
@@ -71,31 +45,19 @@
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Section <span class="text-red-500">*</span></label
           >
-          <select
-            name=""
-            id=""
-            required
-            :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
-          >
-            <option value="" class="text-gray-300">Select section</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
+             <select name="" v-model="formData.section" id="" @change="handleSelectSection" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+            <option value="" class="text-gray-300">Select</option>
+            <option v-for="section in sections" :key="section.id" :value="section.name">{{section.name}}</option>
+            </select>
         </div>
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Department <span class="text-red-500">*</span></label
           >
-          <select
-            name=""
-            id=""
-            required
-            :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
-          >
-            <option value="" class="text-gray-300">Select department</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
+             <select name="" id="" v-model="formData.department" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+            <option value="" class="text-gray-300">Select</option>
+            <option v-for="department in departments" :key="department.id" :value="department.name">{{department.name}}</option>
+            </select>
         </div>
       </div>
     </div>
@@ -103,7 +65,6 @@
 </template>
 
 <script>
-import { watch } from 'vue';
 // import Icon from './Icon.vue'
 import Icon from "./Icon.vue";
 import axios from 'axios';
@@ -112,26 +73,64 @@ export default {
   components: {
     Icon,
   },
+      props: {
+    formData: Object,
+  },
+  watch: {
+    formData: {
+      deep: true,
+      handler(newValue) {
+        this.$emit("update:formData", newValue);
+      },
+    },
+  },
   data() {
     return {
-    // branch:{},
+      sessions:[],
       classes: [],
+      sections:[],
+      departments:[],
     }
   },
   mounted(){
+    axios.get(`${baseUrl}academics/sessions`,config).then(res=>{
+this.sessions= res.data.sessions;
+  }).catch(err=>{
 
-    axios.get(`${baseUrl}academics/filter/branch_classes/${sessionStorage.getItem('branch').id}`,config).then(res=>{
-  console.log(res.data.branch_classes);
+    console.log(err);
+    })
+
+const branch=JSON.parse(sessionStorage.getItem('branch'))
+    axios.get(`${baseUrl}academics/filter/branch_classes/${branch.id}`,config).then(res=>{
 this.classes= res.data.branch_classes;
   }).catch(err=>{
 
     console.log(err);
     })
-  window.emitter.on('branch',(branch)=>{
-         console.log(branch);
-})
  
+  },
 
+  methods:{
+  handleSelectClass(event){
+  const clas=this.classes.find(cl=>cl.name==event.target.value);
+      axios.get(`${baseUrl}academics/filter/class_sections/${clas.id}`,config).then(res=>{
+this.sections= res.data.branch_class_sections
+;
+  }).catch(err=>{
+
+    console.log(err);
+    })
+  },
+  handleSelectSection(){
+  const branch=JSON.parse(sessionStorage.getItem('branch'))
+      axios.get(`${baseUrl}academics/filter/branch_departments/${branch.id}`,config).then(res=>{
+this.departments= res.data.branch_departments
+;
+  }).catch(err=>{
+
+    console.log(err);
+    })
+  }
   }
 };
 </script>

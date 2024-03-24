@@ -31,7 +31,8 @@
           <input
             type="text"
             required
-            :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
+v-model="formData.first_name"
+             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
         <div>
@@ -41,6 +42,7 @@
           <input
             type="text"
             required
+            v-model="formData.last_name"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -51,6 +53,7 @@
           <input
             type="text"
             required
+            v-model="formData.other_names"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -62,6 +65,7 @@
             name=""
             id=""
             required
+            v-model="formData.gender"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
             <option value="" class="text-gray-300">Choose</option>
@@ -77,6 +81,7 @@
             name=""
             id=""
             required
+            v-model="formData.relationship"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
             <option value="" class="text-gray-300">Choose</option>
@@ -93,6 +98,7 @@
             name=""
             id=""
             required
+            v-model="formData.religion"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
             <option value="" class="text-gray-300">Choose</option>
@@ -107,6 +113,7 @@
           <input
             type="email"
             required
+            v-model="formData.email"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -127,23 +134,18 @@
           <input
             type="text"
             required
+            occupation
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
-        <div>
+       <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
             >State <span class="text-red-500">*</span></label
           >
-          <select
-            name=""
-            id=""
-            required
-            :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
-          >
-            <option value="" class="text-gray-300">Choose</option>
-            <option value="Oyo State">Oyo State</option>
-            <option value="Lagos">Lagos</option>
-          </select>
+               <select name="" v-model="formData.state" id="" @change="handleSelectState" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+            <option value="" class="text-gray-300">Select</option>
+            <option v-for="state in states" :key="state.id" :value="state.name">{{state.name}}</option>
+            </select>
         </div>
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
@@ -153,13 +155,12 @@
             name=""
             id=""
             required
+            v-model="formData.local_government"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
-            <option value="" class="text-gray-300">Choose</option>
-            <option value="Oriire Local Government">
-              Oriire Local Government
-            </option>
-            <option value="Suuru Lere">Suuru Lere</option>
+           <option value="" class="text-gray-300">Select</option>
+            <option v-for="local_government in local_governments" :key="local_government.id" :value="local_government.name">{{local_government.name}}</option>
+            
           </select>
         </div>
         <div>
@@ -169,16 +170,18 @@
           <input
             type="text"
             required
+            city
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
       </div>
       <div class="my-4">
         <label class="block text-gray-500 font-semibold tracking-wide"
-          >Parrent Address <span class="text-red-500">*</span></label
+          >Permanent Address <span class="text-red-500">*</span></label
         >
         <textarea
           required
+          v-model="formData.address"
           :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
         ></textarea>
       </div>
@@ -187,10 +190,54 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Icon from "./Icon.vue";
+import { baseUrl, config } from '../main';
 export default {
   components: {
     Icon,
+  },
+      props: {
+    formData: Object,
+  },
+   data() {
+    return {
+      states: [],
+      local_governments: [],
+    }
+  },
+  watch: {
+    formData: {
+      deep: true,
+      handler(newValue) {
+        this.$emit("update:formData", newValue);
+      },
+    },
+  },
+    mounted(){
+      axios.get(`${baseUrl}states`,config).then(res=>{
+  console.log(res);
+this.states= res.data.states;
+  }).catch(err=>{
+
+    console.log(err);
+    })
+  },
+
+  methods:{
+    handleSelectState(event){
+    console.log(event.target.value);
+  const state=this.states.find(state=>state.name==event.target.value);
+      axios.get(`${baseUrl}lg_for_a_state/${state.id}`,config).then(res=>{
+  console.log(res.data);
+this.local_governments= res.data.local_governments
+;
+  }).catch(err=>{
+
+    console.log(err);
+    })
+  },
+  
   },
 };
 </script>
