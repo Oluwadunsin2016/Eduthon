@@ -4,10 +4,9 @@
   <div class="py-6 px-4 shadow-md rounded">
     <div class="my-4 w-[60%] mx-auto">
             <label class="block text-gray-500 font-semibold tracking-wide">Branches <span class="text-red-500">*</span></label>
-            <select name="" id="" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
-            <option value=""></option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <select name="" id="" @change="handleSelect" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+            <option value="" class="text-gray-300">Select</option>
+            <option v-for="branch in branches" :key="branch.id" :value="branch.name">{{branch.name}}</option>
             </select>
           </div>
           <div class="flex justify-end">
@@ -20,14 +19,48 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Icon from '../components/Icon.vue'
+import { watch } from 'vue';
+import { baseUrl, config } from '../main';
 export default {
 components:{
 Icon
 },
+data() {
+  return {
+    branches: [],
+    branch:{}
+  }
+},
+mounted(){
+  axios.get(`${baseUrl}branches`,config).then(res=>{
+  console.log(res.data.branches);
+this.branches= res.data.branches;
+  }).catch(err=>{
+
+    console.log(err);
+    })
+
+
+
+
+},
+
   methods:{
+selectBranch(branch){
+this.branch=branch
+},
+
+    handleSelect(event) {
+      this.branch=this.branches.find(b=>b.name==event.target.value);
+    },
   proceed(){
+  if (Object.keys(this.branch).length > 0) {
+  console.log(this.branch);
+  sessionStorage.setItem("branch", this.branch);
   this.$router.push('/enroll');
+  }
   }
   }
 }

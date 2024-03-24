@@ -7,26 +7,23 @@
   <span class="text-[#003399] font-bold tracking-wider text-lg">Student Login Credentials</span>
   </div>
 
-    <form class="m-4 px-4 py-6 rounded-md shadow-md" >
+    <div class="m-4 px-4 py-6 rounded-md shadow-md" >
     <div class="grid grid-col-1 md:grid-cols-3 gap-4 my-4">
       <div>
             <label class="block text-gray-500 font-semibold tracking-wide">Email <span class="text-red-500">*</span></label>
-            <input type="email" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"  />
-            <!-- <small class="text-xs errorMessage">{{ errorMessage.firstName }}</small> -->
+            <input type="email" required :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"  />
           </div>
       <div>
             <label class="block text-gray-500 font-semibold tracking-wide">Password <span class="text-red-500">*</span></label>
-            <input type="password" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"  />
-            <!-- <small class="text-xs errorMessage">{{ errorMessage.firstName }}</small> -->
+            <input type="password" required :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"  />
           </div>
       <div>
             <label class="block text-gray-500 font-semibold tracking-wide">Confirm Password <span class="text-red-500">*</span></label>
-            <input type="password" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"  />
-            <!-- <small class="text-xs errorMessage">{{ errorMessage.firstName }}</small> -->
+            <input type="password" required :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"  />
           </div>
     </div>
     
-      </form>
+      </div>
   </div>
 </template>
 

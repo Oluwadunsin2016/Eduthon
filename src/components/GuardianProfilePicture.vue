@@ -7,7 +7,7 @@
   <span class="text-[#003399] font-bold tracking-wider text-lg">Guardian Profile Picture</span>
   </div>
 
-    <form class="m-4 px-4 py-6 rounded-md shadow-md" >
+    <div class="m-4 px-4 py-6 rounded-md shadow-md" >
    <div class="border-2 border-dashed rounded-xl p-4">
                   <div class="flex flex-col justify-center items-center">
                     <div class="inline-block p-4 my-5 rounded-full bg-slate-100">
@@ -25,12 +25,11 @@
                   </div>
                 </div>
     
-      </form>
+      </div>
   </div>
 </template>
 
 <script>
-// import Icon from './Icon.vue'
 import Icon from './Icon.vue'
 export default {
 components:{

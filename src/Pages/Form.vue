@@ -3,16 +3,19 @@
   <StudentDetails/>
   <StudentLoginCredentials/>
   <GuardianDetails/>
-  <GuardianLoginCredentials/>
   <GuardianProfilePicture/>
   <PreviousSchoolDetails/>
+<form @submit.prevent="submitForm">
+  <GuardianLoginCredentials :formData="formData" />
   <div class="flex justify-center item-center">
      <button
+     type="submit"
                 class="bg-[#003399] hover:bg-[#33518b] px-2 py-1 font-bold text-white rounded shadow-md tracking-wider"
               >
                 Enroll Now
               </button>
   </div>
+</form>
 </template>
 
 <script>
@@ -32,7 +35,29 @@ GuardianDetails,
 GuardianLoginCredentials,
 GuardianProfilePicture,
 PreviousSchoolDetails,
-}
+},
+
+ data() {
+    return {
+   formData:{
+   guardian:{
+   email:'',
+   password:'',
+   confirmPassword:'',
+   }
+   }
+    };
+  },
+
+methods: {
+  submitForm() {
+  console.log(this.formData);
+  },
+
+  updateFormData(newFormData) {
+      this.formData = { ...newFormData };
+    },
+},
 }
 </script>
 

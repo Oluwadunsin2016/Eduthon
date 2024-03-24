@@ -29,14 +29,16 @@
 </div>
 <div class="flex items-center gap-4">
 <!-- <div class="hidden md:!flex items-center gap-4 "> -->
-<div class="flex items-center gap-4 ">
+<div  class="flex items-center gap-4 ">
+<img class="h-3 w-4 rounded-sm" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/1200px-Flag_of_Nigeria.svg.png" alt="Nigeria_flag">
 <div class="inline cursor-pointer">
           <Icon :title="'square'" :color="'gray'" :size="18" />
 </div>
 <div class="inline cursor-pointer">
           <Icon :title="'moon'" :color="'gray'" :size="18" />
 </div>
-<div class="inline cursor-pointer">
+<div class="inline cursor-pointer relative">
+<span class="w-4 h-4 text-xs text-center bg-red-500 text-white rounded-full absolute -top-2 -right-1">1</span>
           <Icon :title="'bell'" :color="'gray'" :size="18" />
 </div>
 <div class="inline cursor-pointer">
@@ -93,6 +95,9 @@ export default {
       leftDrawerOpen: ref(false),
       showNav: true,
     }
+  },
+  mounted(){
+  // this.$router.push('/login');
   },
 
     created() {
