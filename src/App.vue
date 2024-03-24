@@ -27,8 +27,8 @@
           </div>
         </div>
 </div>
-<div class="flex items-center gap-4">
-<!-- <div class="hidden md:!flex items-center gap-4 "> -->
+<!-- <div class="flex items-center gap-4"> -->
+<div class="!hidden md:!flex items-center gap-4 ">
 <div  class="flex items-center gap-4 ">
 <img class="h-3 w-4 rounded-sm" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/1200px-Flag_of_Nigeria.svg.png" alt="Nigeria_flag">
 <div class="inline cursor-pointer">
@@ -45,10 +45,43 @@
           <Icon :title="'dot'" :color="'gray'" :size="30" />
 </div>
 </div>
-<div class="inline cursor-pointer">
-          <Icon :title="'arrow_down'" :color="'gray'" :size="18" />
 </div>
+    <q-btn-dropdown
+    class="md:!hidden !shadow-none !text-gray-400 !bg-transparent outline-none"
+    >
+      <q-list>
+        <q-item clickable v-close-popup>
+          <q-item-section class="flex justify-center items-center">
+            <img class="h-3 w-4 rounded-sm" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/1200px-Flag_of_Nigeria.svg.png" alt="Nigeria_flag">
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable v-close-popup>
+          <q-item-section class="flex justify-center items-center">
+            <Icon :title="'square'" :color="'gray'" :size="18" />
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable v-close-popup>
+          <q-item-section class="flex justify-center items-center">
+           <Icon :title="'moon'" :color="'gray'" :size="18" />
+          </q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup>
+          <q-item-section class="flex justify-center items-center">
+           <div class="inline cursor-pointer relative">
+<span class="w-4 h-4 text-xs text-center bg-red-500 text-white rounded-full absolute -top-2 -right-1">1</span>
+          <Icon :title="'bell'" :color="'gray'" :size="18" />
 </div>
+          </q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup>
+          <q-item-section class="flex justify-center items-center">
+       <Icon :title="'dot'" :color="'gray'" :size="30" />
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
