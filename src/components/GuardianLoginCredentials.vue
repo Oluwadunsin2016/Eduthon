@@ -1,5 +1,5 @@
 <template>
-  <div class="my-8">
+  <div v-if="!guardianExists" class="my-8">
     <div class="px-4 flex items-center gap-2">
       <div class="p-2 bg-[#003399] rounded-tl-lg rounded-bl-lg">
         <Icon :title="'user_lock'" :color="'white'" :size="18" />
@@ -52,14 +52,22 @@
 <script>
 import Icon from "./Icon.vue";
 export default {
+data(){
+return{
+guardianExists:false
+}
+},
   components: {
     Icon,
   },
   props: {
     formData: Object,
   },
-  mounted(){
-  },
+mounted(){
+window.emitter.on('guardianExists',(status)=>{
+this.guardianExists=status
+})
+},
 
   watch: {
     formData: {

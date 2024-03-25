@@ -47,6 +47,7 @@
 </div>
 </div>
     <q-btn-dropdown
+    unelevated
     class="md:!hidden !shadow-none !text-gray-400 !bg-transparent outline-none"
     >
       <q-list>

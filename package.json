@@ -11,6 +11,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^1.6.8",
     "quasar": "^2.0.0",
+    "tailwindcss-animated": "^1.0.1",
     "tiny-emitter": "^2.1.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

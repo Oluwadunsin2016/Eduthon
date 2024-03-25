@@ -4,15 +4,15 @@
       class="flex flex-col gap-4 md:flex-row-reverse md:justify-between px-4"
     >
       <div class="flex items-center gap-4">
-        <span>Guardian Already exists:</span>
-        <button class="bg-green-300 rounded-md py-1 px-3 text-semibold">
+        <span class="font-semibold tracking-wider">Guardian Already exists:</span>
+        <button @click="hideGuardian" type="button" class="bg-green-300 rounded-md py-1 px-3 text-semibold cursor-pointer">
           <span class="text-green-600">Yes</span>
         </button>
-        <button class="bg-red-300 rounded-md py-1 px-3 text-semibold">
+        <button @click="showGuardian" type="button" class="bg-red-300 rounded-md py-1 px-3 text-semibold cursor-pointer">
           <span class="text-red-600">No</span>
         </button>
       </div>
-      <div class="flex items-center gap-2">
+      <div v-if="!guardianExists" class="flex items-center gap-2">
         <div class="p-2 bg-[#003399] rounded-tl-lg rounded-bl-lg">
           <Icon :title="'guardian'" :color="'white'" :size="18" />
         </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="m-4 px-4 py-6 rounded-md shadow-md">
+    <div v-if="!guardianExists" class="m-4 px-4 py-6 rounded-md shadow-md">
       <div class="grid grid-col-1 my-4 md:grid-cols-3 gap-4">
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
@@ -204,6 +204,7 @@ export default {
     return {
       states: [],
       local_governments: [],
+      guardianExists:false
     }
   },
   watch: {
@@ -237,6 +238,15 @@ this.local_governments= res.data.local_governments
     console.log(err);
     })
   },
+
+  hideGuardian(){
+  this.guardianExists=true
+  window.emitter.emit('guardianExists',true)
+  },
+  showGuardian(){
+  this.guardianExists=false
+  window.emitter.emit('guardianExists',false)
+  }
   
   },
 };
