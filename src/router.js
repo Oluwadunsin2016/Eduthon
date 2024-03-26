@@ -5,7 +5,7 @@ import Login from "./Pages/Login.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/branches",
     component: Branches,
     meta: { public: false }, // marked the route as private
   },
@@ -15,7 +15,7 @@ const routes = [
     meta: { public: false }, // marked the route as private
   },
   {
-    path: "/login",
+    path: "/",
     name: "login",
     component:Login,
     meta: { public: true }, // marked the route as public

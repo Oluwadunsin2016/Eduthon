@@ -15,7 +15,7 @@
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Academic Session <span class="text-red-500">*</span></label
           >
-                 <select name="" id="" v-model="formData.session" @change="handleSelectSession" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+                 <select name="" id="" v-model="session" @change="handleSelectSession" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
             <option value="" class="text-gray-300">Select</option>
             <option v-for="session in sessions" :key="session.id" :value="session.name">{{session.name}}</option>
             </select>
@@ -27,7 +27,8 @@
           <input
             type="date"
             required
-            v-model="formData.enroll_date"
+            v-model="enrol_date"
+              @input="updateDate"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -37,7 +38,7 @@
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Class <span class="text-red-500">*</span></label
           >
-      <select name="" id="" v-model="formData.class" @change="handleSelectClass" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+      <select name="" id="" @change="handleSelectClass" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
             <option value="" class="text-gray-300">Select</option>
             <option v-for="clas in classes" :key="clas.id" :value="clas.name">{{clas.name}}</option>
             </select>
@@ -46,7 +47,7 @@
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Section <span class="text-red-500">*</span></label
           >
-             <select name="" v-model="formData.section" id="" @change="handleSelectSection" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+             <select name="" v-model="section" id="" @change="handleSelectSection" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
             <option value="" class="text-gray-300">Select</option>
             <option v-for="section in sections" :key="section.id" :value="section.name">{{section.name}}</option>
             </select>
@@ -55,7 +56,7 @@
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Department <span class="text-red-500">*</span></label
           >
-             <select name="" id="" v-model="formData.department" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+             <select name="" id="" @change="handleSelectDepartment" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
             <option value="" class="text-gray-300">Select</option>
             <option v-for="department in departments" :key="department.id" :value="department.name">{{department.name}}</option>
             </select>
@@ -87,6 +88,14 @@ export default {
   },
   data() {
     return {
+    session: null,
+    enrol_date: '',
+    branch: null,
+    clas: null,
+    section: null,
+    department: null,
+    state: null,
+    lga: null,
       sessions:[],
       classes: [],
       sections:[],
@@ -112,8 +121,13 @@ this.classes= res.data.branch_classes;
   },
 
   methods:{
+updateDate(){
+  this.$store.commit('setEnrolDate',this.enrol_date)
+},
+  
   handleSelectClass(event){
   const clas=this.classes.find(cl=>cl.name==event.target.value);
+  this.$store.commit('setClass',clas.id)
       axios.get(`${baseUrl}academics/filter/class_sections/${clas.id}`,config).then(res=>{
 this.sections= res.data.branch_class_sections
 ;
@@ -122,7 +136,9 @@ this.sections= res.data.branch_class_sections
     console.log(err);
     })
   },
-  handleSelectSection(){
+  handleSelectSection(event){
+  const section=this.sections.find(section=>section.name==event.target.value);
+  this.$store.commit('setSection',section.id)
   const branch=JSON.parse(sessionStorage.getItem('branch'))
       axios.get(`${baseUrl}academics/filter/branch_departments/${branch.id}`,config).then(res=>{
 this.departments= res.data.branch_departments
@@ -131,7 +147,15 @@ this.departments= res.data.branch_departments
 
     console.log(err);
     })
-  }
+  },
+  handleSelectSession(event){
+  const session=this.sessions.find(session=>session.name==event.target.value);
+  this.$store.commit('setSession',session.id)
+  },
+  handleSelectDepartment(event){
+  const department=this.departments.find(department=>department.name==event.target.value);
+  this.$store.commit('setDepartment',department.id)
+  },
   }
 };
 </script>

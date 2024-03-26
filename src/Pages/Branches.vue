@@ -55,6 +55,7 @@ this.branches= res.data.branches;
   proceed(){
   if (Object.keys(this.branch).length > 0) {
   console.log(this.branch);
+  this.$store.commit('setBranch',this.branch.id)
   sessionStorage.setItem("branch", JSON.stringify(this.branch));
   this.$router.push('/enroll');
   }

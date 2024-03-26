@@ -90,7 +90,8 @@ password:'',
    if (res.data.token) {
       localStorage.setItem('eduthonToken',res.data.token)
 
-    this.$router.push('/')
+    // this.$router.push('/')
+     location.replace('/dashboard')
     }
   }).catch(err=>{
 

@@ -12,7 +12,7 @@
           <span class="text-red-600">No</span>
         </button>
       </div>
-      <div v-if="!guardianExists" class="flex items-center gap-2">
+      <div v-if="this.$store.state.guardian_id>0" class="flex items-center gap-2">
         <div class="p-2 bg-[#003399] rounded-tl-lg rounded-bl-lg">
           <Icon :title="'guardian'" :color="'white'" :size="18" />
         </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div v-if="!guardianExists" class="m-4 px-4 py-6 rounded-md shadow-md">
+    <div v-if="this.$store.state.guardian_id>0" class="m-4 px-4 py-6 rounded-md shadow-md">
       <div class="grid grid-col-1 my-4 md:grid-cols-3 gap-4">
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
@@ -31,7 +31,8 @@
           <input
             type="text"
             required
-v-model="formData.first_name"
+v-model="guardian_firstname"
+@input="handleGuardianFirstName"
              :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -42,18 +43,20 @@ v-model="formData.first_name"
           <input
             type="text"
             required
-            v-model="formData.last_name"
+            v-model="guardian_lastname"
+@input="handleGuardianLastName"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
-            >Other Names <span class="text-red-500">*</span></label
+            >Middle Names <span class="text-red-500">*</span></label
           >
           <input
             type="text"
             required
-            v-model="formData.other_names"
+           v-model="guardian_middlename"
+@input="handleGuardianMiddleName"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -65,7 +68,8 @@ v-model="formData.first_name"
             name=""
             id=""
             required
-            v-model="formData.gender"
+            v-model="guardian_gender"
+@change="handleGuardianGender"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
             <option value="" class="text-gray-300">Choose</option>
@@ -81,7 +85,8 @@ v-model="formData.first_name"
             name=""
             id=""
             required
-            v-model="formData.relationship"
+            v-model="guardian_relationship"
+@change="handleGuardianRelationship"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
             <option value="" class="text-gray-300">Choose</option>
@@ -98,7 +103,8 @@ v-model="formData.first_name"
             name=""
             id=""
             required
-            v-model="formData.religion"
+            v-model="guardian_religion"
+@change="handleGuardianReligion"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
             <option value="" class="text-gray-300">Choose</option>
@@ -113,7 +119,8 @@ v-model="formData.first_name"
           <input
             type="email"
             required
-            v-model="formData.email"
+            v-model="guardian_email"
+@input="handleGuardianEmail"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -124,6 +131,8 @@ v-model="formData.first_name"
           <input
             type="tel"
             required
+            v-model="guardian_mobile"
+@input="handleGuardianMobile"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -135,6 +144,8 @@ v-model="formData.first_name"
             type="text"
             required
             occupation
+            v-model="guardian_occupation"
+@input="handleGuardianOccupation"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -142,7 +153,7 @@ v-model="formData.first_name"
           <label class="block text-gray-500 font-semibold tracking-wide"
             >State <span class="text-red-500">*</span></label
           >
-               <select name="" v-model="formData.state" id="" @change="handleSelectState" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+               <select name="" id="" @change="handleSelectState" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
             <option value="" class="text-gray-300">Select</option>
             <option v-for="state in states" :key="state.id" :value="state.name">{{state.name}}</option>
             </select>
@@ -155,7 +166,7 @@ v-model="formData.first_name"
             name=""
             id=""
             required
-            v-model="formData.local_government"
+            @change="handleSelectLga"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
            <option value="" class="text-gray-300">Select</option>
@@ -170,7 +181,8 @@ v-model="formData.first_name"
           <input
             type="text"
             required
-            v-model="formData.city"
+            v-model="guardian_city"
+@input="handleGuardianCity"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -181,7 +193,6 @@ v-model="formData.first_name"
         >
         <textarea
           required
-          v-model="formData.address"
           :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
         ></textarea>
       </div>
@@ -197,23 +208,25 @@ export default {
   components: {
     Icon,
   },
-      props: {
-    formData: Object,
-  },
    data() {
     return {
+     guardian_id: 1,
+    guardian_firstname: "",
+    guardian_lastname: "",
+    guardian_middlename: "",
+    guardian_gender: "",
+    guardian_email: "",
+    guardian_mobile: "",
+    guardian_city: "",
+    guardian_religion: "",
+    guardian_occupation: "",
+    guardian_relationship: "",
+    guardian_state: null,
+    guardian_lga: null,
       states: [],
       local_governments: [],
       guardianExists:false
     }
-  },
-  watch: {
-    formData: {
-      deep: true,
-      handler(newValue) {
-        this.$emit("update:formData", newValue);
-      },
-    },
   },
     mounted(){
       axios.get(`${baseUrl}states`,config).then(res=>{
@@ -229,6 +242,7 @@ this.states= res.data.states;
     handleSelectState(event){
     console.log(event.target.value);
   const state=this.states.find(state=>state.name==event.target.value);
+  this.$store.commit('setGuardianState',state.id)
       axios.get(`${baseUrl}lg_for_a_state/${state.id}`,config).then(res=>{
   console.log(res.data);
 this.local_governments= res.data.local_governments
@@ -239,13 +253,54 @@ this.local_governments= res.data.local_governments
     })
   },
 
+  
+    handleSelectLga(event){
+      const lga = this.local_governments.find(
+        (lga) => lga.name == event.target.value
+      );
+      this.$store.commit('setGuardianLga',lga.id)
+    },
+
+    handleGuardianFirstName(){
+this.$store.commit('setGuardianFirstName',this.guardian_firstname)
+},
+handleGuardianLastName(){
+this.$store.commit('setGuardianLastName',this.guardian_lastname)
+},
+handleGuardianMiddleName(){
+this.$store.commit('setGuardianMiddleName',this.guardian_middlename)
+},
+handleGuardianEmail(){
+this.$store.commit('setGuardianEmail',this.guardian_email)
+},
+// handleGuardianAddress(){
+// this.$store.commit('setGuardianAddress',this.email)
+// },
+handleGuardianGender(){
+this.$store.commit('setGuardianGender',this.guardian_gender)
+},
+handleGuardianReligion(){
+this.$store.commit('setGuardianReligion',this.guardian_religion)
+},
+handleGuardianMobile(){
+this.$store.commit('setGuardianMobile',this.guardian_mobile)
+},
+handleGuardianCity(){
+this.$store.commit('setGuardianCity',this.guardian_city)
+},
+handleGuardianOccupation(){
+this.$store.commit('setGuardianOccupation',this.guardian_occupation)
+},
+handleGuardianRelationship(){
+this.$store.commit('setGuardianRelationship',this.guardian_relationship)
+},
+
+
   hideGuardian(){
-  this.guardianExists=true
-  window.emitter.emit('guardianExists',true)
+  this.$store.commit('guardianStatus',1)
   },
   showGuardian(){
-  this.guardianExists=false
-  window.emitter.emit('guardianExists',false)
+  this.$store.commit('guardianStatus',0)
   }
   
   },

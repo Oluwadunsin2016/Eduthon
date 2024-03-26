@@ -18,7 +18,8 @@
           <input
             type="text"
             required
-            v-model="formData.name"
+            v-model="prev_school_name"
+            @input="handlePrevSchoolName"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -29,7 +30,8 @@
           <input
             type="text"
             required
-            v-model="formData.qualification"
+            v-model="prev_school_qualification"
+            @input="handlePrevSchoolQualification"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -42,7 +44,8 @@
           name=""
           id=""
           required
-          v-model="formData.remark"
+          v-model="prev_school_remark"
+          @input="handlePrevSchoolRemark"
           :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
         ></textarea>
       </div>
@@ -54,6 +57,13 @@
 // import Icon from './Icon.vue'
 import Icon from "./Icon.vue";
 export default {
+data() {
+  return {
+     prev_school_name: "",
+    prev_school_qualification: "",
+    prev_school_remark: "",
+  }
+},
   components: {
     Icon,
   },
@@ -68,6 +78,18 @@ export default {
       },
     },
   },
+
+methods: {
+  handlePrevSchoolName() {
+    this.$store.commit('setPrevSchoolName',this.prev_school_name)
+  },
+  handlePrevSchoolQualification() {
+    this.$store.commit('setPrevSchoolQualification',this.prev_school_qualification)
+  },
+  handlePrevSchoolRemark() {
+    this.$store.commit('setPrevSchoolRemark',this.prev_school_remark)
+  },
+},
 };
 </script>
 

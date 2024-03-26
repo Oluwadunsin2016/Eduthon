@@ -13,16 +13,24 @@
       <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-8">
         <div class="md:col-span-2 flex flex-col gap-4">
           <div
-            class="border rounded h-[10rem] flex items-center justify-center"
+            class="border rounded h-[14rem] overflow-hidden flex items-center justify-center"
           >
-            <Icon :title="'image'" :color="'#05AA63'" :size="100" />
+            <img
+              class="w-full h-full object-top rounded-md object-cover"
+              :src="`${display_image ?? 'https://i.stack.imgur.com/l60Hf.png'}`"
+            />
           </div>
           <div class="">
             <label
               for="fileInput"
               class="bg-gray-100 p-1 rounded-lg flex justify-between items-center hover:bg-gray-200 cursor-pointer"
             >
-              <input type="file" @change="handleFileChange" class="hidden" id="fileInput" />
+              <input
+                type="file"
+                @change="handleFileChange"
+                class="hidden"
+                id="fileInput"
+              />
               <span
                 class="bg-[#003399] hover:bg-[#33518b] px-2 py-1 text-white rounded-md shadow font-medium"
               >
@@ -39,7 +47,8 @@
             <input
               type="text"
               required
-              v-model="formData.first_name"
+              v-model="firstname"
+              @input="updateFirstName"
               :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
             />
           </div>
@@ -50,7 +59,8 @@
             <input
               type="text"
               required
-              v-model="formData.last_name"
+              v-model="lastname"
+              @input="updateLastName"
               :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
             />
           </div>
@@ -61,7 +71,8 @@
             <input
               type="text"
               required
-              v-model="formData.other_names"
+              v-model="middlename"
+              @input="updateMiddleName"
               :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
             />
           </div>
@@ -73,7 +84,8 @@
               name=""
               id=""
               required
-              v-model="formData.gender"
+              v-model="gender"
+              @change="updateGender"
               :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
             >
               <option value="" class="text-gray-300">Choose</option>
@@ -88,7 +100,8 @@
             <input
               type="date"
               required
-              v-model="formData.date_of_birth"
+              v-model="dob"
+              @input="updateDob"
               :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
             />
           </div>
@@ -100,7 +113,8 @@
               name=""
               id=""
               required
-              v-model="formData.religion"
+              v-model="religion"
+              @change="updateReligion"
               :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
             >
               <option value="" class="text-gray-300">Choose</option>
@@ -116,7 +130,8 @@
               name=""
               id=""
               required
-              v-model="formData.genotype"
+              v-model="genotype"
+              @change="updateGenotype"
               :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
             >
               <option value="" class="text-gray-300">Choose</option>
@@ -136,7 +151,8 @@
               name=""
               id=""
               required
-              v-model="formData.blood_group"
+              v-model="bloodgroup"
+              @change="updateBloodGroup"
               :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
             >
               <option value="" class="text-gray-300">Choose</option>
@@ -154,7 +170,8 @@
           <input
             type="email"
             required
-            v-model="formData.email"
+            v-model="email"
+              @input="updateEmail"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -165,7 +182,8 @@
           <input
             type="tel"
             required
-            v-model="formData.phone_number"
+            v-model="mobile"
+              @input="updateMobile"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -176,7 +194,8 @@
           <input
             type="text"
             required
-            v-model="formData.mother_language"
+            v-model="mothertongue"
+              @input="updateMotherTongue"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -184,10 +203,17 @@
           <label class="block text-gray-500 font-semibold tracking-wide"
             >State <span class="text-red-500">*</span></label
           >
-               <select name="" v-model="formData.state" id="" @change="handleSelectState" :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `">
+          <select
+            name=""
+            id=""
+            @change="handleSelectState"
+            :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 shadow-sm `"
+          >
             <option value="" class="text-gray-300">Select</option>
-            <option v-for="state in states" :key="state.id" :value="state.name">{{state.name}}</option>
-            </select>
+            <option v-for="state in states" :key="state.id" :value="state.name">
+              {{ state.name }}
+            </option>
+          </select>
         </div>
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
@@ -197,12 +223,18 @@
             name=""
             id=""
             required
-            v-model="formData.local_government"
+            v-model="lga"
+              @change="handleSelectLga"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           >
-           <option value="" class="text-gray-300">Select</option>
-            <option v-for="local_government in local_governments" :key="local_government.id" :value="local_government.name">{{local_government.name}}</option>
-            
+            <option value="" class="text-gray-300">Select</option>
+            <option
+              v-for="local_government in local_governments"
+              :key="local_government.id"
+              :value="local_government.name"
+            >
+              {{ local_government.name }}
+            </option>
           </select>
         </div>
         <div>
@@ -212,7 +244,8 @@
           <input
             type="text"
             required
-            v-model="formData.city"
+           v-model="city"
+              @input="updateCity"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -223,7 +256,8 @@
         >
         <textarea
           required
-          v-model="formData.address"
+         v-model="address"
+              @input="updateAddress"
           :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
         ></textarea>
       </div>
@@ -232,21 +266,37 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import Icon from "./Icon.vue";
-import { baseUrl, config } from '../main';
+import { baseUrl, config } from "../main";
 export default {
   components: {
     Icon,
   },
-      props: {
+  props: {
     formData: Object,
   },
   data() {
     return {
+      display_image: null,
+      state: null,
+      lga: null,
+      firstname: "",
+      lastname: "",
+      middlename: "",
+      gender: "",
+      dob: "",
+      religion: "",
+      bloodgroup: null,
+      genotype: null,
+      mothertongue: null,
+      email: "",
+      mobile: "",
+      city: "",
+      address: null,
       states: [],
       local_governments: [],
-    }
+    };
   },
   watch: {
     formData: {
@@ -256,35 +306,88 @@ export default {
       },
     },
   },
-
-  mounted(){
-      axios.get(`${baseUrl}states`,config).then(res=>{
-this.states= res.data.states;
-  }).catch(err=>{
-
-    console.log(err);
-    })
+  mounted() {
+    axios
+      .get(`${baseUrl}states`, config)
+      .then((res) => {
+        this.states = res.data.states;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 
-  methods:{
-   handleFileChange(e) {
+  methods: {
+updateFirstName(){
+this.$store.commit('setFirstName',this.firstname)
+},
+updateLastName(){
+this.$store.commit('setLastName',this.lastname)
+},
+updateMiddleName(){
+this.$store.commit('setMiddleName',this.middlename)
+},
+updateEmail(){
+this.$store.commit('setEmail',this.email)
+},
+updateAddress(){
+this.$store.commit('setAddress',this.address)
+},
+updateGender(){
+this.$store.commit('setGender',this.gender)
+},
+updateDob(){
+this.$store.commit('setDob',this.dob)
+},
+updateReligion(){
+this.$store.commit('setReligion',this.religion)
+},
+updateBloodGroup(){
+this.$store.commit('setBloodGroup',this.bloodgroup)
+},
+updateGenotype(){
+this.$store.commit('setGenotype',this.genotype)
+},
+updateMotherTongue(){
+this.$store.commit('setMotherTongue',this.mothertongue)
+},
+updateMobile(){
+this.$store.commit('setMobile',this.mobile)
+},
+updateCity(){
+this.$store.commit('setCity',this.city)
+},
+
+
+    handleFileChange(e) {
+      this.display_image = URL.createObjectURL(e.target.files[0]);
       this.formData.profile_image = e.target.files[0];
     },
 
-    handleSelectState(event){
-    console.log(event.target.value);
-  const state=this.states.find(state=>state.name==event.target.value);
-      axios.get(`${baseUrl}lg_for_a_state/${state.id}`,config).then(res=>{
-this.local_governments= res.data.local_governments
-;
-  }).catch(err=>{
+    handleSelectState(event) {
+      const state = this.states.find(
+        (state) => state.name == event.target.value
+      );
+      this.$store.commit('setState',state.id)
+      axios
+        .get(`${baseUrl}lg_for_a_state/${state.id}`, config)
+        .then((res) => {
+          this.local_governments = res.data.local_governments;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
 
-    console.log(err);
-    })
-  },
+    handleSelectLga(event){
+      const lga = this.local_governments.find(
+        (lga) => lga.name == event.target.value
+      );
+      this.$store.commit('setLga',lga.id)
+    },
+
   
   },
-
 };
 </script>
 

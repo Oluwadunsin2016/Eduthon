@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!guardianExists" class="my-8">
+  <div v-if="this.$store.state.guardian_id>0" class="my-8">
     <div class="px-4 flex items-center gap-2">
       <div class="p-2 bg-[#003399] rounded-tl-lg rounded-bl-lg">
         <Icon :title="'user_lock'" :color="'white'" :size="18" />
@@ -16,8 +16,6 @@
           >
           <input
             type="email"
-            required
-            v-model="formData.email"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -25,11 +23,9 @@
           <label class="block text-gray-500 font-semibold tracking-wide"
             >Password <span class="text-red-500">*</span></label
           >
-            
+
           <input
             type="password"
-            required
-            v-model="formData.password"
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
@@ -39,11 +35,9 @@
           >
           <input
             type="password"
-            required
             :class="`border bg-transparent dark:focus:border-indigo-600 w-full rounded outline-none focus:border-indigo-400 p-2 `"
           />
         </div>
-        
       </div>
     </div>
   </div>
@@ -52,22 +46,22 @@
 <script>
 import Icon from "./Icon.vue";
 export default {
-data(){
-return{
-guardianExists:false
-}
-},
+  data() {
+    return {
+      guardianExists: false,
+    };
+  },
   components: {
     Icon,
   },
   props: {
     formData: Object,
   },
-mounted(){
-window.emitter.on('guardianExists',(status)=>{
-this.guardianExists=status
-})
-},
+  mounted() {
+    window.emitter.on("guardianExists", (status) => {
+      this.guardianExists = status;
+    });
+  },
 
   watch: {
     formData: {
