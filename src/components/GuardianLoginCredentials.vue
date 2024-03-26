@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.$store.state.guardian_id>0" class="my-8">
+  <div v-if="this.$store.state.guardian_id<1" class="my-8">
     <div class="px-4 flex items-center gap-2">
       <div class="p-2 bg-[#003399] rounded-tl-lg rounded-bl-lg">
         <Icon :title="'user_lock'" :color="'white'" :size="18" />

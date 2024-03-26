@@ -12,7 +12,7 @@
           <span class="text-red-600">No</span>
         </button>
       </div>
-      <div v-if="this.$store.state.guardian_id>0" class="flex items-center gap-2">
+      <div v-if="this.$store.state.guardian_id<1" class="flex items-center gap-2">
         <div class="p-2 bg-[#003399] rounded-tl-lg rounded-bl-lg">
           <Icon :title="'guardian'" :color="'white'" :size="18" />
         </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div v-if="this.$store.state.guardian_id>0" class="m-4 px-4 py-6 rounded-md shadow-md">
+    <div v-if="this.$store.state.guardian_id<1" class="m-4 px-4 py-6 rounded-md shadow-md">
       <div class="grid grid-col-1 my-4 md:grid-cols-3 gap-4">
         <div>
           <label class="block text-gray-500 font-semibold tracking-wide"
