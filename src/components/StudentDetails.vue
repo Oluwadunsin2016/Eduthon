@@ -17,19 +17,19 @@
           >
             <img
               class="w-full h-full object-top rounded-md object-cover"
-              :src="`${display_image ?? 'https://i.stack.imgur.com/l60Hf.png'}`"
+              :src="`${profile_image ?? 'https://i.stack.imgur.com/l60Hf.png'}`"
             />
           </div>
           <div class="">
             <label
-              for="fileInput"
+              for="myFileInput"
               class="bg-gray-100 p-1 rounded-lg flex justify-between items-center hover:bg-gray-200 cursor-pointer"
             >
               <input
                 type="file"
-                @change="handleFileChange"
+                @change="handleFileSelect"
                 class="hidden"
-                id="fileInput"
+                id="myFileInput"
               />
               <span
                 class="bg-[#003399] hover:bg-[#33518b] px-2 py-1 text-white rounded-md shadow font-medium"
@@ -278,7 +278,7 @@ export default {
   },
   data() {
     return {
-      display_image: null,
+      profile_image: null,
       state: null,
       lga: null,
       firstname: "",
@@ -359,8 +359,8 @@ this.$store.commit('setCity',this.city)
 },
 
 
-    handleFileChange(e) {
-      this.display_image = URL.createObjectURL(e.target.files[0]);
+    handleFileSelect(e) {
+      this.profile_image = URL.createObjectURL(e.target.files[0]);
       this.formData.profile_image = e.target.files[0];
     },
 

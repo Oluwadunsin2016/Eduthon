@@ -28,15 +28,15 @@
           </div>
           <p v-if="!isDraggedOver">
             <label
-              for="fileInput"
+              for="guardianFileInput"
               class="text-blue-400 font-medium cursor-pointer inline"
             >
               Click to add
               <input
                 type="file"
-                @change="handleFileChange"
+                @change="handleGuardianFileChange"
                 class="hidden"
-                id="fileInput"
+                id="guardianFileInput"
               />
             </label>
             <span> or drag and drop </span>
@@ -89,9 +89,9 @@ export default {
       this.formData.profile_image = event.dataTransfer.files[0];
     },
 
-       handleFileChange(e) {
+       handleGuardianFileChange(e) {
     console.log(e)
-      this.formData.profile_image = e.target.files[0];
+      // this.profile_image = e.target.files[0];
       this.display_image = URL.createObjectURL(e.target.files[0]);
     },
   },
