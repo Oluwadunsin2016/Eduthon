@@ -1,5 +1,6 @@
 <template>
-  <div v-if="this.$store.state.guardian_id<1" class="my-8">
+  <!-- <div v-if="this.$store.state.guardian_id<1" class="my-8"> -->
+  <div class="my-8">
     <div class="px-4 flex items-center gap-2">
       <div class="p-2 bg-[#003399] rounded-tl-lg rounded-bl-lg">
         <Icon :title="'guardian'" :color="'white'" :size="18" />
@@ -86,13 +87,14 @@ export default {
     handleDrop(event) {
       this.isDraggedOver = false;
       this.display_image = URL.createObjectURL(event.dataTransfer.files[0]);
-      this.formData.profile_image = event.dataTransfer.files[0];
+      this.$store.commit('setGuardianAvatar',event.dataTransfer.files[0])
     },
 
        handleGuardianFileChange(e) {
     console.log(e)
       // this.profile_image = e.target.files[0];
       this.display_image = URL.createObjectURL(e.target.files[0]);
+      this.$store.commit('setGuardianAvatar',e.target.files[0])
     },
   },
 };

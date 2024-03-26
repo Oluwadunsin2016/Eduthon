@@ -1,5 +1,6 @@
 <template>
-  <div v-if="this.$store.state.guardian_id<1" class="my-8">
+  <!-- <div v-if="this.$store.state.guardian_id<1" class="my-8"> -->
+  <div class="my-8">
     <div class="px-4 flex items-center gap-2">
       <div class="p-2 bg-[#003399] rounded-tl-lg rounded-bl-lg">
         <Icon :title="'user_lock'" :color="'white'" :size="18" />
@@ -47,29 +48,10 @@
 import Icon from "./Icon.vue";
 export default {
   data() {
-    return {
-      guardianExists: false,
-    };
+    return {};
   },
   components: {
     Icon,
-  },
-  props: {
-    formData: Object,
-  },
-  mounted() {
-    window.emitter.on("guardianExists", (status) => {
-      this.guardianExists = status;
-    });
-  },
-
-  watch: {
-    formData: {
-      deep: true,
-      handler(newValue) {
-        this.$emit("update:formData", newValue);
-      },
-    },
   },
 };
 </script>

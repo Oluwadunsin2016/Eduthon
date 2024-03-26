@@ -13,6 +13,7 @@ export default createStore({
     department: null,
     state: null,
     lga: null,
+    profile_picture: "",
     firstname: "",
     lastname: "",
     middlename: "",
@@ -29,10 +30,11 @@ export default createStore({
     prev_school_name: "",
     prev_school_qualification: "",
     prev_school_remark: "",
-    guardian_id: 0,
+    guardian_id: 1,
     guardian_firstname: "",
     guardian_lastname: "",
     guardian_middlename: "",
+    guardian_avatar: "",
     guardian_gender: "",
     guardian_email: "",
     guardian_mobile: "",
@@ -52,6 +54,9 @@ export default createStore({
     },
     setMiddleName(state, payload) {
       state.middlename = payload;
+    },
+    setProfilePicture(state, payload) {
+      state.profile_picture = payload;
     },
     setGender(state, payload) {
       state.gender = payload;
@@ -130,6 +135,9 @@ export default createStore({
     setGuardianMiddleName(state, payload) {
       state.guardian_middlename = payload;
     },
+    setGuardianAvatar(state, payload) {
+      state.guardian_avatar = payload;
+    },
     setGuardianGender(state, payload) {
       state.guardian_gender = payload;
     },
@@ -165,7 +173,7 @@ export default createStore({
     submitForm({ state }) {
       console.log(state);
       axios
-        .post(`${baseUrl}admission/single_enrol/${state.branch}`, config)
+        .post(`${baseUrl}admission/single_enrol/${state.branch}`, state, config)
         .then((res) => {
           console.log(err);
         })

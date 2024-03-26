@@ -361,7 +361,7 @@ this.$store.commit('setCity',this.city)
 
     handleFileSelect(e) {
       this.profile_image = URL.createObjectURL(e.target.files[0]);
-      this.formData.profile_image = e.target.files[0];
+this.$store.commit('setProfilePicture',e.target.files[0])
     },
 
     handleSelectState(event) {
