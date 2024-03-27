@@ -360,8 +360,15 @@ this.$store.commit('setCity',this.city)
 
 
     handleFileSelect(e) {
-      this.profile_image = URL.createObjectURL(e.target.files[0]);
-this.$store.commit('setProfilePicture',e.target.files[0])
+     const file = e.target.files[0];
+      const fileReader = new FileReader();
+      this.profile_image = URL.createObjectURL(file);
+      fileReader.onload = () => {
+      this.$store.commit('setGuardianAvatar',fileReader.result)
+      };
+      fileReader.readAsDataURL(file);
+//       this.profile_image = URL.createObjectURL(e.target.files[0]);
+// this.$store.commit('setProfilePicture',e.target.files[0])
     },
 
     handleSelectState(event) {
