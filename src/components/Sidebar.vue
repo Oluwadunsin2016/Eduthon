@@ -106,7 +106,7 @@
         </q-item-section>
         <q-item-section>New Student</q-item-section>
       </q-item>
-      <q-item clickable v-ripple to="/multiple" exact>
+      <q-item clickable>
         <q-item-section avatar>
           <q-icon name="keyboard_double_arrow_right" />
         </q-item-section>
@@ -252,13 +252,13 @@
         class="text-gray-200 font-semibold tracking-wider"
       >
            <q-list class="ms-5 font-normal">
-      <q-item clickable v-ripple to="/enroll_student" exact>
+      <q-item clickable v-ripple>
         <q-item-section avatar>
           <q-icon name="keyboard_double_arrow_right" />
         </q-item-section>
         <q-item-section>New Student</q-item-section>
       </q-item>
-      <q-item clickable v-ripple to="/multiple" exact>
+      <q-item clickable v-ripple>
         <q-item-section avatar>
           <q-icon name="keyboard_double_arrow_right" />
         </q-item-section>

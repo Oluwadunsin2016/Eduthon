@@ -8,13 +8,15 @@
     <PreviousSchoolDetails />
     <GuardianLoginCredentials />
     <div class="flex justify-center item-center">
-      <button
+      <q-btn
         type="submit"
-        class="bg-[#003399] hover:bg-[#33518b] px-2 py-1 font-bold text-white rounded shadow-md tracking-wider"
+        :class="` text-white ${this.$store.state.loading?'!bg-[#6c85b6]':'!bg-[#003399]'} min-w-[9rem] text-center`"
       >
-        Enroll Now
-      </button>
+        <q-spinner v-if="this.$store.state.loading" size="md" />
+        <span class="!font-semibold  tracking-wider" v-else>Enroll Now</span>
+      </q-btn>
     </div>
+    <Alert />
   </form>
 </template>
 
@@ -26,6 +28,9 @@ import GuardianDetails from "../components/GuardianDetails.vue";
 import GuardianLoginCredentials from "../components/GuardianLoginCredentials.vue";
 import GuardianProfilePicture from "../components/GuardianProfilePicture.vue";
 import PreviousSchoolDetails from "../components/PreviousSchoolDetails.vue";
+import Alert from "../components/Alert.vue";
+import { useQuasar } from "quasar";
+
 export default {
   components: {
     AcademicDetails,
@@ -35,59 +40,11 @@ export default {
     GuardianLoginCredentials,
     GuardianProfilePicture,
     PreviousSchoolDetails,
+    Alert,
   },
 
   data() {
-    return {
-      formData: {
-        student_personal_details: {
-          profile_image: "",
-          first_name: "",
-          last_name: "",
-          other_names: "",
-          gender: "",
-          date_of_birth: "",
-          religion: "",
-          blood_group: "",
-          genotype: "",
-          email: "",
-          password: "",
-          phone_number: "",
-          mother_language: "",
-          state: "",
-          local_government: "",
-          city: "",
-          address: "",
-        },
-        academic_details: {
-          session: "",
-          class: "",
-          enroll_date: "",
-          section: "",
-          department: "",
-        },
-        previous_school: {
-          name: "",
-          qualification: "",
-          remark: "",
-        },
-        guardian_information: {
-          profile_image: "",
-          first_name: "",
-          last_name: "",
-          other_names: "",
-          local_government: "",
-          city: "",
-          address: "",
-          gender: "",
-          religion: "",
-          relationship: "",
-          occupation: "",
-          email: "",
-          password: "",
-        },
-      },
-    };
+    return {};
   },
 
   methods: {

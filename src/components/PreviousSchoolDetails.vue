@@ -67,17 +67,6 @@ data() {
   components: {
     Icon,
   },
-      props: {
-    formData: Object,
-  },
-  watch: {
-    formData: {
-      deep: true,
-      handler(newValue) {
-        this.$emit("update:formData", newValue);
-      },
-    },
-  },
 
 methods: {
   handlePrevSchoolName() {

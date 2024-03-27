@@ -57,7 +57,7 @@ this.branches= res.data.branches;
   console.log(this.branch);
   this.$store.commit('setBranch',this.branch.id)
   sessionStorage.setItem("branch", JSON.stringify(this.branch));
-  this.$router.push('/enroll');
+  this.$router.push('/enroll_student');
   }
   }
   }

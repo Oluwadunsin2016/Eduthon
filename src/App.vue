@@ -1,6 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-gray-50">
     <div v-if="showNav">
+    <!-- This is the header section -->
       <q-header class="h-16 !bg-gray-100 shadow flex items-center">
         <q-toolbar class="flex justify-between items-center px-5">
           <div class="flex items-center gap-2">
@@ -40,6 +41,7 @@
               </div>
               <div class="inline cursor-pointer">
                 <Icon :title="'moon'" :color="'gray'" :size="18" />
+                 <q-tooltip class="!bg-gray-300 !text-sm !font-semibold !tracking-wider !text-[#003399]">Mode</q-tooltip>
               </div>
               <div class="inline cursor-pointer relative">
                 <span
@@ -47,9 +49,14 @@
                   >1</span
                 >
                 <Icon :title="'bell'" :color="'gray'" :size="18" />
+                 <q-tooltip class="!bg-gray-300 !text-sm !font-semibold !tracking-wider !text-[#003399]">Notification</q-tooltip>
               </div>
-              <div class="inline cursor-pointer">
+              <!-- <div class="inline cursor-pointer">
                 <Icon :title="'dot'" :color="'gray'" :size="30" />
+              </div> -->
+              <div @click="confirm = true" class="inline cursor-pointer">
+                <Icon :title="'logout'" :color="'gray'" :size="20" />
+                <q-tooltip class="!bg-gray-300 !text-sm !font-semibold !tracking-wider !text-[#003399]">Logout</q-tooltip>
               </div>
             </div>
           </div>
@@ -77,6 +84,7 @@
               <q-item clickable v-close-popup>
                 <q-item-section class="flex justify-center items-center">
                   <Icon :title="'moon'" :color="'gray'" :size="18" />
+                   <q-tooltip anchor="top middle" self="bottom middle" class="!bg-gray-300 !text-sm !font-semibold !tracking-wider !text-[#003399]">Mode</q-tooltip>
                 </q-item-section>
               </q-item>
               <q-item clickable v-close-popup>
@@ -87,30 +95,56 @@
                       >1</span
                     >
                     <Icon :title="'bell'" :color="'gray'" :size="18" />
+                     <q-tooltip anchor="top middle" self="bottom middle" class="!bg-gray-300 !text-sm !font-semibold !tracking-wider !text-[#003399]">Notification</q-tooltip>
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup>
+              <!-- <q-item clickable v-close-popup>
                 <q-item-section class="flex justify-center items-center">
                   <Icon :title="'dot'" :color="'gray'" :size="30" />
+                </q-item-section>
+              </q-item> -->
+              <q-item clickable v-close-popup>
+                <q-item-section
+                @click="confirm = true"
+                  class="flex justify-center items-center"
+                >
+                  <Icon :title="'logout'" :color="'gray'" :size="20" />
+                   <q-tooltip anchor="top middle" self="bottom middle" class="!bg-gray-300 !text-sm !font-semibold !tracking-wider !text-[#003399]">Logout</q-tooltip>
                 </q-item-section>
               </q-item>
             </q-list>
           </q-btn-dropdown>
         </q-toolbar>
       </q-header>
+<!-- This is the logout confirm section -->
+   <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section class="items-center">
+          <span class="q-ml-sm text-medium font-medium">Are you sure you want to log out ?</span>
+        </q-card-section>
 
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="red" v-close-popup />
+          <q-btn flat label="Confirm" color="primary" @click="logout" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+<!-- This is the sidebar drawer section -->
       <q-drawer v-model="leftDrawerOpen" show-if-above class="w-[5rem]">
         <Sidebar />
       </q-drawer>
     </div>
 
+<!-- This the main pages rendering container section -->
     <q-page-container>
       <div class="py-6 px-8">
         <router-view />
       </div>
     </q-page-container>
 
+<!-- This the footer section -->
     <q-footer
       v-if="showNav"
       class="absolute bottom-0 border-t !bg-gray-100 !text-gray-600 border-gray-200 flex flex-col items-center sm:flex-row sm:justify-between px-4 py-2"
@@ -138,18 +172,23 @@ export default {
     return {
       leftDrawerOpen: ref(false),
       showNav: true,
+      confirm: ref(false),
     };
   },
   mounted() {
-    this.$router.push("/branches");
-    // localStorage.removeItem("eduthonToken");
-    // this.$router.push("/");
   },
   created() {
     this.$router.afterEach((to, from) => {
       // Update showNav based on the current route
       this.showNav = to.path !== "/";
     });
+  },
+  methods: {
+    logout() {
+    this.confirm=false
+      localStorage.removeItem("eduthonToken");
+      this.$router.push("/");
+    },
   },
 };
 </script>

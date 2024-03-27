@@ -3,8 +3,10 @@ import router from "./router";
 import axios from "axios";
 import { baseUrl, config } from "./main";
 
+
 export default createStore({
   state: {
+   student_information:{
     session: null,
     enrol_date: "",
     branch: null,
@@ -44,142 +46,192 @@ export default createStore({
     guardian_relationship: "",
     guardian_state: null,
     guardian_lga: null,
+   },
+   alert_information:{
+   type:'',
+   message:'',
+   status:false,
+   },
+   loading:false,
   },
   mutations: {
     setFirstName(state, payload) {
-      state.firstname = payload;
+      state.student_information.firstname = payload;
     },
     setLastName(state, payload) {
-      state.lastname = payload;
+      state.student_information.lastname = payload;
     },
     setMiddleName(state, payload) {
-      state.middlename = payload;
+      state.student_information.middlename = payload;
     },
     setProfilePicture(state, payload) {
-      state.profile_picture = payload;
+      state.student_information.profile_picture = payload;
     },
     setGender(state, payload) {
-      state.gender = payload;
+      state.student_information.gender = payload;
     },
     setState(state, payload) {
-      state.state = payload;
+      state.student_information.state = payload;
     },
     setLga(state, payload) {
-      state.lga = payload;
+      state.student_information.lga = payload;
     },
     setDob(state, payload) {
-      state.dob = payload;
+      state.student_information.dob = payload;
     },
     setReligion(state, payload) {
-      state.religion = payload;
+      state.student_information.religion = payload;
     },
     setBloodGroup(state, payload) {
-      state.bloodgroup = payload;
+      state.student_information.bloodgroup = payload;
     },
     setGenotype(state, payload) {
-      state.genotype = payload;
+      state.student_information.genotype = payload;
     },
     setMotherTongue(state, payload) {
-      state.mothertongue = payload;
+      state.student_information.mothertongue = payload;
     },
     setEmail(state, payload) {
-      state.email = payload;
+      state.student_information.email = payload;
     },
     setMobile(state, payload) {
-      state.mobile = payload;
+      state.student_information.mobile = payload;
     },
     setCity(state, payload) {
-      state.city = payload;
+      state.student_information.city = payload;
     },
     setAddress(state, payload) {
-      state.address = payload;
+      state.student_information.address = payload;
     },
     setEnrolDate(state, payload) {
-      state.enrol_date = payload;
+      state.student_information.enrol_date = payload;
     },
     setBranch(state, payload) {
-      state.branch = payload;
+      state.student_information.branch = payload;
     },
     setClass(state, payload) {
-      state.class = payload;
+      state.student_information.class = payload;
     },
     setSession(state, payload) {
-      state.session = payload;
+      state.student_information.session = payload;
     },
     setSection(state, payload) {
-      state.section = payload;
+      state.student_information.section = payload;
     },
     setDepartment(state, payload) {
-      state.department = payload;
+      state.student_information.department = payload;
     },
     setPrevSchoolName(state, payload) {
-      state.prev_school_name = payload;
+      state.student_information.prev_school_name = payload;
     },
     setPrevSchoolQualification(state, payload) {
-      state.prev_school_qualification = payload;
+      state.student_information.prev_school_qualification = payload;
     },
     setPrevSchoolRemark(state, payload) {
-      state.prev_school_remark = payload;
+      state.student_information.prev_school_remark = payload;
     },
 
     guardianStatus(state, payload) {
-      state.guardian_id = payload;
+      state.student_information.guardian_id = payload;
     },
 
     setGuardianFirstName(state, payload) {
-      state.guardian_firstname = payload;
+      state.student_information.guardian_firstname = payload;
     },
     setGuardianLastName(state, payload) {
-      state.guardian_lastname = payload;
+      state.student_information.guardian_lastname = payload;
     },
     setGuardianMiddleName(state, payload) {
-      state.guardian_middlename = payload;
+      state.student_information.guardian_middlename = payload;
     },
     setGuardianAvatar(state, payload) {
-      state.guardian_avatar = payload;
+      state.student_information.guardian_avatar = payload;
     },
     setGuardianGender(state, payload) {
-      state.guardian_gender = payload;
+      state.student_information.guardian_gender = payload;
     },
     setGuardianState(state, payload) {
-      state.guardian_state = payload;
+      state.student_information.guardian_state = payload;
     },
     setGuardianLga(state, payload) {
-      state.guardian_lga = payload;
+      state.student_information.guardian_lga = payload;
     },
     setGuardianReligion(state, payload) {
-      state.guardian_religion = payload;
+      state.student_information.guardian_religion = payload;
     },
     setGuardianEmail(state, payload) {
-      state.guardian_email = payload;
+      state.student_information.guardian_email = payload;
     },
     setGuardianMobile(state, payload) {
-      state.guardian_mobile = payload;
+      state.student_information.guardian_mobile = payload;
     },
     setGuardianCity(state, payload) {
-      state.guardian_city = payload;
+      state.student_information.guardian_city = payload;
     },
     setGuardianAddress(state, payload) {
-      state.guardian_address = payload;
+      state.student_information.guardian_address = payload;
     },
     setGuardianRelationship(state, payload) {
-      state.guardian_relationship = payload;
+      state.student_information.guardian_relationship = payload;
     },
     setGuardianOccupation(state, payload) {
-      state.guardian_occupation = payload;
+      state.student_information.guardian_occupation = payload;
+    },
+    showAlert(state, payload) {
+      state.alert_information.type = payload.type;
+      state.alert_information.message = payload.message;
+      state.alert_information.status = payload.status;
+    },
+    showLoading(state, payload) {
+      state.loading = payload
     },
   },
   actions: {
-    submitForm({ state }) {
+    submitForm({ state,dispatch,commit, }) {
       console.log(state);
+commit('showLoading',true)
       axios
-        .post(`${baseUrl}admission/single_enrol/${state.branch}`, state, config)
+        .post(`${baseUrl}admission/single_enrol/${state.student_information.branch}`, state.student_information, config)
         .then((res) => {
-          console.log(err);
+          console.log(res);
+          if (res.status==200) {
+commit('showLoading',false)
+      dispatch('showAlert',{
+      type:'success',
+      message:res.data.success,
+      status:true,
+      }) 
+      setTimeout(() => {
+      dispatch('showAlert',{
+      type:'success',
+      message:res.data.success,
+      status:false,
+      }) 
+      }, 3000);    
+          }
         })
         .catch((err) => {
           console.log(err);
+      //     commit('showLoading',false)
+      // dispatch('showAlert',{
+      // type:'error',
+      // message:res.data.error,
+      // status:true,
+      // }) 
+      // setTimeout(() => {
+      // dispatch('showAlert',{
+      // type:'error',
+      // message:res.data.error,
+      // status:false,
+      // }) 
+      // }, 3000);    
         });
     },
+
+showAlert({commit},payload){
+commit('showAlert',payload)
+},
+ 
+
   },
 });

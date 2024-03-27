@@ -1,16 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Branches from "./Pages/Branches.vue";
 import Form from "./Pages/Form.vue";
+import Dashboard from "./Pages/Dashboard.vue";
 import Login from "./Pages/Login.vue";
 
 const routes = [
+  {
+    path: "/dashboard",
+    component: Dashboard,
+    meta: { public: false }, // marked the route as private
+  },
   {
     path: "/branches",
     component: Branches,
     meta: { public: false }, // marked the route as private
   },
   {
-    path: "/enroll",
+    path: "/enroll_student",
     component: Form,
     meta: { public: false }, // marked the route as private
   },
