@@ -88,7 +88,7 @@ password:'',
   console.log(this.loginDetails);
   axios.post(`${baseUrl}login`,this.loginDetails).then(res=>{
    if (res.data.token) {
-      localStorage.setItem('eduthonToken',res.data.token)
+      sessionStorage.setItem('eduthonToken',res.data.token)
 
     // this.$router.push('/')
      location.replace('/dashboard')

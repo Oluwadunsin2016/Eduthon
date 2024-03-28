@@ -48,7 +48,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem("eduthonToken");
+  const isAuthenticated = !!sessionStorage.getItem("eduthonToken");
 
   // if (!to.meta.public) {
   //   if (!isAuthenticated) {

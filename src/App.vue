@@ -191,7 +191,7 @@ export default {
   methods: {
     logout() {
     this.confirm=false
-      localStorage.removeItem("eduthonToken");
+      sessionStorage.removeItem("eduthonToken");
       this.$router.push("/");
     },
   },
