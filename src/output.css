@@ -657,6 +657,11 @@ video {
   margin-right: auto;
 }
 
+.my-2{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .my-4{
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -769,6 +774,10 @@ video {
   height: 7rem;
 }
 
+.h-\[90vh\]{
+  height: 90vh;
+}
+
 .h-full{
   height: 100%;
 }
@@ -875,6 +884,10 @@ video {
 
 .overflow-y-scroll{
   overflow-y: scroll;
+}
+
+.\!rounded-full{
+  border-radius: 9999px !important;
 }
 
 .rounded{
@@ -1170,6 +1183,10 @@ video {
   font-weight: 700;
 }
 
+.font-extrabold{
+  font-weight: 800;
+}
+
 .font-medium{
   font-weight: 500;
 }
@@ -1387,6 +1404,10 @@ video {
 
   .md\:\!w-\[80\%\]{
     width: 80% !important;
+  }
+
+  .md\:w-\[40\%\]{
+    width: 40%;
   }
 
   .md\:w-\[60\%\]{

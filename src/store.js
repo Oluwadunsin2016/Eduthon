@@ -207,24 +207,45 @@ commit('showLoading',false)
       message:res.data.success,
       status:false,
       }) 
+      this.$router.push('/dashboard')
       }, 3000);    
           }
         })
         .catch((err) => {
+          commit('showLoading',false)
           console.log(err);
-      //     commit('showLoading',false)
-      // dispatch('showAlert',{
-      // type:'error',
-      // message:res.data.error,
-      // status:true,
-      // }) 
-      // setTimeout(() => {
-      // dispatch('showAlert',{
-      // type:'error',
-      // message:res.data.error,
-      // status:false,
-      // }) 
-      // }, 3000);    
+          if (err.response.data.message) {
+              dispatch('showAlert',{
+      type:'error',
+      message:err.response.data.message,
+      status:true,
+      }) 
+      setTimeout(() => {
+      dispatch('showAlert',{
+      type:'error',
+      message:err.response.data.message,
+      status:false,
+      }) 
+      }, 3000); 
+          }
+
+
+          if (err.response.data.errors) {  
+          Object.values(err.response.data.errors).every(value=>{  
+      dispatch('showAlert',{
+      type:'error',
+      message:value[0],
+      status:true,
+      }) 
+      setTimeout(() => {
+      dispatch('showAlert',{
+      type:'error',
+      message:value[0],
+      status:false,
+      }) 
+      }, 3000);    
+          })
+          }
         });
     },
 

@@ -38,7 +38,6 @@ mounted(){
   console.log(res.data.branches);
 this.branches= res.data.branches;
   }).catch(err=>{
-
     console.log(err);
     })
 
@@ -56,7 +55,6 @@ this.branches= res.data.branches;
   if (Object.keys(this.branch).length > 0) {
   console.log(this.branch);
   this.$store.commit('setBranch',this.branch.id)
-  sessionStorage.setItem("branch", JSON.stringify(this.branch));
   this.$router.push('/enroll_student');
   }
   }

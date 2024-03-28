@@ -159,6 +159,7 @@
 import { ref } from "vue";
 import Sidebar from "./components/Sidebar.vue";
 import Icon from "./components/Icon.vue";
+import router from "./router";
 
 export default {
   name: "LayoutDefault",
@@ -180,7 +181,11 @@ export default {
   created() {
     this.$router.afterEach((to, from) => {
       // Update showNav based on the current route
-      this.showNav = to.path !== "/";
+        if (router.hasRoute(to.name)&&to.path !== "/") {
+      this.showNav = true;
+  } else {
+      this.showNav = false;
+  }
     });
   },
   methods: {

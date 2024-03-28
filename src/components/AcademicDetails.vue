@@ -110,13 +110,15 @@ this.sessions= res.data.sessions;
     console.log(err);
     })
 
-const branch=JSON.parse(sessionStorage.getItem('branch'))
-    axios.get(`${baseUrl}academics/filter/branch_classes/${branch.id}`,config).then(res=>{
+const branch=this.$store.state.student_information.branch
+if (branch) {
+    axios.get(`${baseUrl}academics/filter/branch_classes/${branch}`,config).then(res=>{
 this.classes= res.data.branch_classes;
   }).catch(err=>{
 
     console.log(err);
     })
+}
  
   },
 
@@ -139,8 +141,8 @@ this.sections= res.data.branch_class_sections
   handleSelectSection(event){
   const section=this.sections.find(section=>section.name==event.target.value);
   this.$store.commit('setSection',section.id)
-  const branch=JSON.parse(sessionStorage.getItem('branch'))
-      axios.get(`${baseUrl}academics/filter/branch_departments/${branch.id}`,config).then(res=>{
+  const branch=this.$store.state.student_information.branch
+      axios.get(`${baseUrl}academics/filter/branch_departments/${branch}`,config).then(res=>{
 this.departments= res.data.branch_departments
 ;
   }).catch(err=>{
